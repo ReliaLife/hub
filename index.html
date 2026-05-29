@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReliaLife Tools</title>
+  <meta name="description" content="A launcher for ReliaLife's web tools." />
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --muted: #6b7280;
+      --line: #e7e7e9;
+      --bg: #fafafa;
+      --card: #ffffff;
+      --accent: #0f766e;
+      --live-bg: #e7f5f1;
+      --live-ink: #0f766e;
+      --soon-bg: #f0f0f1;
+      --soon-ink: #888;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 880px; margin: 0 auto; padding: 72px 24px 96px; }
+
+    header { margin-bottom: 48px; }
+    .brand {
+      display: flex; align-items: baseline; gap: 10px;
+      font-size: 26px; font-weight: 700; letter-spacing: -0.02em;
+    }
+    .brand .dot { color: var(--accent); }
+    .tagline { color: var(--muted); font-size: 16px; margin-top: 6px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      display: flex; flex-direction: column;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 22px 22px 20px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+    }
+    a.card:hover {
+      border-color: #d2d2d6;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.06);
+      transform: translateY(-2px);
+    }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+    .card h2 { font-size: 17px; font-weight: 650; margin: 0; }
+    .card p { font-size: 14px; color: var(--muted); margin: 0; flex: 1; }
+
+    .badge {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge.live { background: var(--live-bg); color: var(--live-ink); }
+    .badge.soon { background: var(--soon-bg); color: var(--soon-ink); }
+
+    .open { margin-top: 16px; font-size: 14px; font-weight: 600; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; }
+    .open .arrow { transition: transform .15s ease; }
+    a.card:hover .open .arrow { transform: translateX(3px); }
+
+    .card.disabled { opacity: 0.6; cursor: default; }
+    .card.disabled .open { color: var(--muted); }
+
+    footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">ReliaLife<span class="dot">.</span></div>
+      <div class="tagline">Tools</div>
+    </header>
+
+    <main class="grid">
+
+      <a class="card" href="https://refinery-rbd.vercel.app/" target="_blank" rel="noopener">
+        <div class="card-top">
+          <h2>RefineryRBD</h2>
+          <span class="badge live">Live</span>
+        </div>
+        <p>Monte Carlo reliability and financial simulator for refineries. Model process units, sweep availability and MTTR scenarios, and optimize inventory and operating levels.</p>
+        <span class="open">Open<span class="arrow">&rarr;</span></span>
+      </a>
+
+      <a class="card" href="https://weather.relialife.app/" target="_blank" rel="noopener">
+        <div class="card-top">
+          <h2>Weatherstation H&ouml;f</h2>
+          <span class="badge live">Live</span>
+        </div>
+        <p>Live weather dashboard for the H&ouml;f station, with readings served from a lightweight edge backend.</p>
+        <span class="open">Open<span class="arrow">&rarr;</span></span>
+      </a>
+
+      <!--
+        To add a new tool, copy one card block above and update the href, title,
+        description, and badge class (use "soon" for tools not yet live):
+
+        <a class="card disabled">          <-- no href for not-yet-live tools
+          <div class="card-top">
+            <h2>Tool name</h2>
+            <span class="badge soon">Coming soon</span>
+          </div>
+          <p>What the tool does.</p>
+          <span class="open">Coming soon</span>
+        </a>
+      -->
+
+    </main>
+
+    <footer>
+      &copy; ReliaLife &middot; <a href="https://relialife.app/" target="_blank" rel="noopener">relialife.app</a>
+    </footer>
+  </div>
+</body>
+</html>
