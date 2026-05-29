@@ -9,131 +9,181 @@
   <style>
     :root {
       --ink: #1a1a1a;
+      --body: #333333;
       --muted: #707070;
+      --faint: #a8a8a8;
       --line: #e4e4e4;
+      --hover: #f6f6f6;
       --bg: #ffffff;
-      --card: #ffffff;
-      --accent: #1a1a1a;
-      --soon-ink: #a8a8a8;
     }
     * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      margin: 0;
-      color: var(--ink);
-      background: var(--bg);
-      line-height: 1.6;
+      margin: 0; color: var(--ink); background: var(--bg); line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
-    .wrap { max-width: 920px; margin: 0 auto; padding: 110px 24px 110px; }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 56px 32px 96px; }
 
-    header { margin-bottom: 72px; text-align: center; }
+    /* Masthead */
+    header {
+      display: flex; align-items: baseline; gap: 16px;
+      padding-bottom: 22px; margin-bottom: 48px;
+      border-bottom: 1px solid var(--line);
+    }
     .wordmark {
-      font-family: Georgia, 'Times New Roman', serif;
-      font-weight: 400;
-      font-size: clamp(46px, 9vw, 72px);
-      letter-spacing: -0.015em;
-      color: var(--ink);
-      margin: 0;
-      line-height: 1;
+      font-family: Georgia, 'Times New Roman', serif; font-weight: 400;
+      font-size: clamp(30px, 5vw, 42px); letter-spacing: -0.015em;
+      color: var(--ink); margin: 0; line-height: 1;
     }
-    .rule { width: 64px; height: 1px; background: var(--ink); border: 0; margin: 28px auto 22px; opacity: 0.85; }
     .tagline {
-      color: var(--muted); font-size: 12px;
-      text-transform: uppercase; letter-spacing: 0.42em;
-      margin: 0; padding-left: 0.42em;
+      color: var(--faint); font-size: 12px; text-transform: uppercase;
+      letter-spacing: 0.34em; margin: 0; padding-left: 0.34em;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
+    /* Two-pane layout */
+    .layout { display: grid; grid-template-columns: 1fr 2fr; gap: 56px; align-items: start; }
+
+    /* Left: tool buttons */
+    nav.toollist { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+    .tool-btn {
+      appearance: none; -webkit-appearance: none; background: none; cursor: pointer;
+      width: 100%; font: inherit; text-align: left;
+      border: 0; border-bottom: 1px solid var(--line); border-left: 2px solid transparent;
+      padding: 18px 14px 18px 18px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      color: var(--muted); transition: background .12s ease, color .12s ease, border-color .12s ease;
     }
+    .tool-btn:hover { background: var(--hover); color: var(--ink); }
+    .tool-btn.active { background: var(--hover); color: var(--ink); border-left-color: var(--ink); }
+    .tool-btn .nm { font-size: 15.5px; font-weight: 500; }
+    .tool-btn.active .nm { font-weight: 650; }
+    .tool-btn .st { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--faint); white-space: nowrap; }
 
-    .card {
-      display: flex; flex-direction: column;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 22px 22px 20px;
-      text-decoration: none;
-      color: inherit;
-      transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+    /* Right: detail panels */
+    .detail { min-height: 320px; }
+    .panel { display: none; }
+    .panel.active { display: block; animation: fade .22s ease; }
+    @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+    .panel h2 {
+      font-family: Georgia, 'Times New Roman', serif; font-weight: 400;
+      font-size: clamp(28px, 4vw, 38px); letter-spacing: -0.01em;
+      margin: 0 0 8px; line-height: 1.1;
     }
-    a.card:hover {
-      border-color: #d2d2d6;
-      box-shadow: 0 6px 22px rgba(0,0,0,0.06);
-      transform: translateY(-2px);
+    .panel .lead { font-size: 16.5px; color: var(--muted); margin: 0 0 28px; max-width: 60ch; }
+    .panel p { font-size: 15px; line-height: 1.78; color: var(--body); margin: 0 0 16px; max-width: 62ch; }
+    .meta-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--faint);
+      margin: 32px 0 10px; font-weight: 600;
     }
-    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
-    .card h2 { font-size: 17px; font-weight: 650; margin: 0; }
-    .card p { font-size: 14px; color: var(--muted); margin: 0; flex: 1; }
+    .panel ul { margin: 0 0 16px; padding-left: 20px; max-width: 62ch; }
+    .panel li { font-size: 15px; line-height: 1.7; color: var(--body); margin-bottom: 6px; }
 
-    .badge {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 3px 9px; border-radius: 999px; white-space: nowrap;
+    .openbtn {
+      display: inline-flex; align-items: center; gap: 9px; margin-top: 28px;
+      background: var(--ink); color: #fff; text-decoration: none;
+      padding: 12px 22px; border-radius: 8px; font-size: 14px; font-weight: 600;
+      transition: opacity .15s ease;
     }
-    .badge.live { background: var(--ink); color: #fff; }
-    .badge.soon { background: transparent; color: var(--soon-ink); border: 1px solid var(--line); }
+    .openbtn:hover { opacity: 0.85; }
+    .openbtn.disabled { background: #efefef; color: #aaa; pointer-events: none; }
 
-    .open { margin-top: 16px; font-size: 14px; font-weight: 600; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; }
-    .open .arrow { transition: transform .15s ease; }
-    a.card:hover .open .arrow { transform: translateX(3px); }
-
-    .card.disabled { opacity: 0.6; cursor: default; }
-    .card.disabled .open { color: var(--muted); }
-
-    footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+    footer {
+      margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--line);
+      font-size: 13px; color: var(--faint);
+    }
     footer a { color: var(--muted); }
+
+    @media (max-width: 720px) {
+      .wrap { padding: 40px 22px 72px; }
+      .layout { grid-template-columns: 1fr; gap: 32px; }
+      header { margin-bottom: 32px; }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
       <h1 class="wordmark">ReliaLife</h1>
-      <hr class="rule" />
       <p class="tagline">Tools</p>
     </header>
 
-    <main class="grid">
+    <div class="layout">
+      <nav class="toollist" aria-label="Tools">
+        <button class="tool-btn active" data-target="refineryrbd" aria-controls="refineryrbd">
+          <span class="nm">RefineryRBD</span><span class="st">Live</span>
+        </button>
+        <button class="tool-btn" data-target="weatherstation" aria-controls="weatherstation">
+          <span class="nm">Weatherstation H&ouml;f</span><span class="st">Live</span>
+        </button>
+      </nav>
 
-      <a class="card" href="https://refinery-rbd.vercel.app/" target="_blank" rel="noopener">
-        <div class="card-top">
+      <div class="detail">
+
+        <!-- RefineryRBD -->
+        <article class="panel active" id="refineryrbd">
           <h2>RefineryRBD</h2>
-          <span class="badge live">Live</span>
-        </div>
-        <p>Monte Carlo reliability and financial simulator for refineries. Model process units, sweep availability and MTTR scenarios, and optimize inventory and operating levels.</p>
-        <span class="open">Open<span class="arrow">&rarr;</span></span>
-      </a>
+          <p class="lead">A browser-based Monte Carlo reliability and financial simulator for refineries.</p>
 
-      <a class="card" href="https://weather.relialife.app/" target="_blank" rel="noopener">
-        <div class="card-top">
+          <p>RefineryRBD models a refinery as a graph of process units, inventory buffers, and boundary sources and sinks, then runs a Monte Carlo simulation that translates reliability into the operational and financial language a planner can act on. Everything runs in your browser through a Web Worker: no backend, and no data leaves your machine. Cases persist locally and export to Excel or JSON.</p>
+
+          <p>Sweep availability and MTTR scenarios to see the mean EDC you can expect, find which units contribute most to cascade losses, and measure how much protection your inventory actually delivers. Two optimization layers go further: inventory capacity optimization sweeps each tank to find its financial optimum, and operating-level optimization finds the starting set points that maximize system EDC. Both detect when the response is flat and say so, rather than reporting noise as a recommendation.</p>
+
+          <p class="meta-label">Who it's for</p>
+          <p>Refinery engineers, reliability planners, and investment analysts who need defensible answers to questions like: what mean EDC can we expect at 97% availability with a 3-day MTTR? Which units drive the biggest cascade losses? How much inventory does a tank actually need to deliver the protection it claims? What is the dollar-per-year value of perfecting H2 redundancy?</p>
+
+          <a class="openbtn" href="https://refinery-rbd.vercel.app/" target="_blank" rel="noopener">Open RefineryRBD &nearr;</a>
+        </article>
+
+        <!-- Weatherstation Hof  (DRAFT COPY - confirm details) -->
+        <article class="panel" id="weatherstation">
           <h2>Weatherstation H&ouml;f</h2>
-          <span class="badge live">Live</span>
-        </div>
-        <p>Live weather dashboard for the H&ouml;f station, with readings served from a lightweight edge backend.</p>
-        <span class="open">Open<span class="arrow">&rarr;</span></span>
-      </a>
+          <p class="lead">A live weather dashboard for the H&ouml;f station.</p>
 
-      <!--
-        To add a new tool, copy one card block above and update the href, title,
-        description, and badge class (use "soon" for tools not yet live):
+          <p>Weatherstation H&ouml;f presents current conditions and recent readings from the H&ouml;f weather station in a clean, at-a-glance dashboard. A lightweight serverless backend fetches and caches the latest measurements so the dashboard stays fast and up to date.</p>
 
-        <a class="card disabled">          <-- no href for not-yet-live tools
-          <div class="card-top">
-            <h2>Tool name</h2>
-            <span class="badge soon">Coming soon</span>
-          </div>
-          <p>What the tool does.</p>
-          <span class="open">Coming soon</span>
-        </a>
-      -->
+          <p class="meta-label">Who it's for</p>
+          <p>Anyone who wants a quick, reliable look at conditions at the H&ouml;f station.</p>
 
-    </main>
+          <a class="openbtn" href="https://weather.relialife.app/" target="_blank" rel="noopener">Open Weatherstation H&ouml;f &nearr;</a>
+        </article>
+
+      </div>
+    </div>
 
     <footer>
       &copy; ReliaLife &middot; <a href="https://relialife.app/" target="_blank" rel="noopener">relialife.app</a>
     </footer>
   </div>
+
+  <script>
+    (function () {
+      var buttons = Array.prototype.slice.call(document.querySelectorAll('.tool-btn'));
+      var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
+
+      function select(id) {
+        var matched = false;
+        buttons.forEach(function (b) {
+          var on = b.dataset.target === id;
+          b.classList.toggle('active', on);
+          if (on) matched = true;
+        });
+        panels.forEach(function (p) { p.classList.toggle('active', p.id === id); });
+        return matched;
+      }
+
+      buttons.forEach(function (b) {
+        b.addEventListener('click', function () {
+          select(b.dataset.target);
+          history.replaceState(null, '', '#' + b.dataset.target);
+        });
+      });
+
+      // Deep-link support: tools.relialife.app/#weatherstation
+      var hash = (location.hash || '').replace('#', '');
+      if (hash) select(hash);
+    })();
+  </script>
 </body>
 </html>
