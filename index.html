@@ -9,15 +9,12 @@
   <style>
     :root {
       --ink: #1a1a1a;
-      --muted: #6b7280;
-      --line: #e7e7e9;
-      --bg: #fafafa;
+      --muted: #707070;
+      --line: #e4e4e4;
+      --bg: #ffffff;
       --card: #ffffff;
-      --accent: #0f766e;
-      --live-bg: #e7f5f1;
-      --live-ink: #0f766e;
-      --soon-bg: #f0f0f1;
-      --soon-ink: #888;
+      --accent: #1a1a1a;
+      --soon-ink: #a8a8a8;
     }
     * { box-sizing: border-box; }
     body {
@@ -28,18 +25,23 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
-    .wrap { max-width: 880px; margin: 0 auto; padding: 72px 24px 96px; }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 110px 24px 110px; }
 
-    header { margin-bottom: 48px; text-align: center; }
-    .logo {
-      width: 84px; height: 84px;
-      border-radius: 19px;
-      border: 1px solid var(--line);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    header { margin-bottom: 72px; text-align: center; }
+    .wordmark {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-weight: 400;
+      font-size: clamp(46px, 9vw, 72px);
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      margin: 0;
+      line-height: 1;
     }
+    .rule { width: 64px; height: 1px; background: var(--ink); border: 0; margin: 28px auto 22px; opacity: 0.85; }
     .tagline {
-      color: var(--muted); font-size: 15px; margin-top: 14px;
-      text-transform: uppercase; letter-spacing: 0.22em;
+      color: var(--muted); font-size: 12px;
+      text-transform: uppercase; letter-spacing: 0.42em;
+      margin: 0; padding-left: 0.42em;
     }
 
     .grid {
@@ -68,11 +70,11 @@
     .card p { font-size: 14px; color: var(--muted); margin: 0; flex: 1; }
 
     .badge {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
       padding: 3px 9px; border-radius: 999px; white-space: nowrap;
     }
-    .badge.live { background: var(--live-bg); color: var(--live-ink); }
-    .badge.soon { background: var(--soon-bg); color: var(--soon-ink); }
+    .badge.live { background: var(--ink); color: #fff; }
+    .badge.soon { background: transparent; color: var(--soon-ink); border: 1px solid var(--line); }
 
     .open { margin-top: 16px; font-size: 14px; font-weight: 600; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; }
     .open .arrow { transition: transform .15s ease; }
@@ -88,8 +90,9 @@
 <body>
   <div class="wrap">
     <header>
-      <img class="logo" src="logo.svg" alt="ReliaLife" width="84" height="84" />
-      <div class="tagline">Tools</div>
+      <h1 class="wordmark">ReliaLife</h1>
+      <hr class="rule" />
+      <p class="tagline">Tools</p>
     </header>
 
     <main class="grid">
